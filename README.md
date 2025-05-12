@@ -2,8 +2,9 @@
 
 This document introduces the guidelines to culture collections (CCs) curators for the provision of their catalogs to MIRRI for inclusion in the MIRRI Information System (MIRRI-IS).
 It is essential for them to keep in mind that:
-• Only catalogs from collections of MIRRI partner countries are being included in MIRRI-IS.
-• The content of MIRRI-IS is currently limited to an agreed list of information items (MIRRI-IS dataset), whose up-to-date data format is included in the MIRRI-IS dataset document.
+
+* • Only catalogs from collections of MIRRI partner countries are being included in MIRRI-IS.
+* • The content of MIRRI-IS is currently limited to an agreed list of information items (MIRRI-IS dataset), whose up-to-date data format is included in the MIRRI-IS dataset document.
 • All information included in the dataset is recommended and should be submitted when available.
 • For catalogs available in a BioloMICS implementation, BioAware will extract the required data and include them in the MIRRI-IS, provided that the involved CC agrees.
 • For the other catalogs, the extraction of data and its submission to BioAware is under responsibility of the CC curators, which can be supported at the national level or by CECT.
