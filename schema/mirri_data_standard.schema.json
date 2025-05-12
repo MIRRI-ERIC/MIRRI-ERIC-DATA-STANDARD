@@ -1,0 +1,825 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://mirri.org/schemas/mirri-is-schema_2021-01.json",
+  "type": "object",
+  "title": "The MIRRI-IS JSON schema",
+  "description": "The MIRRI-IS JSON schema for data submitted according to MIRRI-IS Guidelines Version 2, approved on June 17th, 2020.",
+  "required": [ "Accession number", "Distribution", "Taxonomy", "Growing conditions" ],
+  "properties": {
+    "MIRRI Accession number": {
+      "$id": "#/properties/MIRRI%20Accession%20number",
+      "type": "string",
+      "pattern": "^MIRRI ([A-Z][A-Z])?([0-9])+$",
+      "title": "MIRRI Accession number",
+      "description": "Unique MIRRI-IS identifier of the strain. "
+      },
+    "Accession number": {
+      "$id": "#/properties/Accession%20number",
+      "type": "string",
+      "pattern": "^([A-Z])+ ([A-Za-z0-9-])+$",
+      "title": "Accession number",
+      "description": "Unique identifier of the strain in the Culture Collection. It includes the CC acronym followed by a space character and a number or code. If a code is used, it cannot include spaces."
+      },
+    "Other culture collection numbers": {
+      "$id": "#/properties/Other%20culture%20collection%20numbers",
+      "type": "array",
+      "title": "Other culture collection numbers",
+      "description": "Identifiers of the same strain in other Culture Collections.",
+      "default": [],
+      "items": { "$ref": "#/properties/Accession%20number" }
+      },
+    "Other denomination": {
+      "$id": "#/properties/Other%20denomination",
+      "type": "array",
+      "title": "Other denominations",
+      "description": "Unofficial names that are often used for the strain, e.g. in publications, or a name given to the strain by the isolator before its deposit at the collection.",
+      "default": [],
+      "items": {
+        "$id": "#/properties/Other%20denomination/items",
+        "type": "string",
+        "title": "Another denomination for the same strain.",
+        "description": "Unofficial name used for the strain or name given to the strain by the isolator before its deposit at the collection.",
+        "default": ""
+        }
+      },
+    "Date of inclusion in the catalogue": {
+      "$id": "#/properties/Date%20of%20inclusion%20in%20the%20catalogue",
+      "type": "string",
+      "format": "date",
+      "title": "Date of inclusion in the catalogue",
+      "description": "Date when the strain was included in the catalog and/or an accession number was assigned to it.",
+      "default": ""
+      },
+    "Distribution": {
+      "$id": "#/properties/Distribution",
+      "type": "object",
+      "title": "Distribution schema",
+      "description": "The Distribution schema includes properties related to the distribution of the strain.",
+      "required": [ "Form of supply", "Restrictions on use", "Nagoya protocol restrictions and compliance conditions" ],
+      "properties": {
+        "Form of supply": {
+          "$id": "#/properties/Distribution/properties/Form%20of%20supply",
+          "type": "array",
+          "title": "Form of supply",
+          "description": "The list of forms of supply of the strain by the collection.",
+          "items": {
+            "$id": "#/properties/Distribution/properties/Form%20of%20supply/items",
+            "type": "string",
+            "enum": [ "Agar","Cryo","Dry Ice","Liquid Culture Medium","Lyo","Oil","Water" ],
+            "title": "Form of supply",
+            "description": "A form of supply for the strain."
+            }
+          },
+        "Restrictions on use": {
+          "$id": "#/properties/Distribution/properties/Restrictions%20on%20use",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 3,
+          "multipleOf": 1,
+          "title": "Restrictions on use",
+          "description": "Report if the strain can be used for commercial development or not: 1 (no restrictions apply), 2 (for research use only), 3 (for commercial development a special agreement is requested)."
+          },
+        "Nagoya protocol restrictions and compliance conditions": {
+          "$id": "#/properties/Distribution/properties/Nagoya%20protocol%20restrictions%20and%20compliance%20conditions",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 3,
+          "multipleOf": 1,
+          "title": "Nagoya protocol restrictions and compliance conditions",
+          "description": "Situation of the strain in relation to the Nagoya protocol. One of the allowed values: 1 ('No known restrictions under the Nagoya protocol'), 2 ('Documents providing proof of legal access and terms of use available at the collection'), 3 ('Strain probably in scope, please contact the culture collection')."
+          },
+        "ABS related files": {
+          "$id": "#/properties/Distribution/properties/ABS%20related%20files",
+          "type": "string",
+          "format": "uri",
+          "title": "ABS related file",
+          "description": "Uniform Resource Locator (URL) of the Internationally Recognized Certificates of Compliance (IRCC) providing evidence that the strain was accessed in accordance with Prior Informed Consent (PIC) and Mutually Agreed Terms (MAT).",
+          "default": ""
+          },
+        "MTA file": {
+          "$id": "#/properties/Distribution/properties/MTA%20file",
+          "type": "string",
+	  "oneOf": [
+              { "format": "uri" },
+              { "pattern": "^[A-Za-z0-9]+.[a-zA-Z]+$" }
+              ],
+          "title": "MTA file",
+          "description": "Working URL or file name of strain specific Material Transfer Agreement (MTA) document.",
+          "default": ""
+          },
+        "Strain from a Registered Collection": {
+          "$id": "#/properties/Distribution/properties/Strain%20from%20a%20Registered%20Collection",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 2,
+          "multipleOf": 1,
+          "title": "Strain from a Registered Collection",
+          "description": "Specifies if the strain is included in a registered CC according to the EU Regulation 511/2014. Values: 1 (for No), 2 (for Yes).",
+          "default": ""
+        }
+      }
+    },
+    "Taxonomy": {
+      "$id": "#/properties/Taxonomy",
+      "type": "object",
+      "title": "The Taxonomy schema",
+      "description": "The Taxonomy schema includes all information related to the taxonomy of the strain.",
+      "required": [ "Risk Group", "Organism type", "Taxon name" ],
+      "properties": {
+        "Risk Group": {
+          "$id": "#/properties/Taxonomy/properties/Risk%20Group",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 4,
+          "multipleOf": 1,
+          "title": "Risk Group",
+          "description": "Risk group according to EU Directive 2000/54/EC and its amendments and corrections."
+        },
+        "Pathogenicity": {
+          "$id": "#/properties/Taxonomy/properties/Pathogenicity",
+          "type": "string",
+          "title": "Pathogenicity",
+          "description": "Information about pathogenicity of the strain for plants, humans and animals. Can include specification for the Belgian plant pathogenicity code.",
+          "default": ""
+        },
+        "Dual use": {
+          "$id": "#/properties/Taxonomy/properties/Dual%20use",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 2,
+          "multipleOf": 1,
+          "title": "Dual use",
+          "description": "Specify whether the strain has the potential for a harmful use according to EU Council Regulation 2000/1334/CE and its amendments and corrections. Values: 1 (for No), 2 (for Yes).",
+          "default": ""
+        },
+        "Quarantine in Europe": {
+          "$id": "#/properties/Taxonomy/properties/Quarantine%20in%20Europe",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 2,
+          "multipleOf": 1,
+          "title": "Quarantine in Europe",
+          "description": "Specify whether the strain is subject to quarantine according to European Directive 2000/29/CE and its amendments and corrections. The list of quarantine organisms is available in the Commission Implementing Regulation (EU) 2019/2072. Values: 1 (for No), 2 (for Yes).",
+          "default": ""
+        },
+        "Organism type": {
+          "$id": "#/properties/Taxonomy/properties/Organism%20type",
+          "type": "string",
+	  "oneOf": [
+		  { "enum": [ "Algae","Archaea","Bacteria","Cyanobacteria","Filamentous Fungi","Phage","Plasmid","Virus","Yeast" ] },
+		  { "const": "Yeast; Filamentous Fungi" },
+		  { "const": "Filamentous Fungi; Yeast" }
+	  ],
+          "title": "Organism type",
+          "description": "The type of the resource. One of the allowed values. Alternatively, both Filamentous Fungi and Yeast can be specified, separated by a ';'."
+        },
+        "Taxon name": {
+          "$id": "#/properties/Taxonomy/properties/Taxon%20name",
+          "type": "string",
+          "title": "Taxon name",
+          "description": "Taxon name including genus, species and variant names, as taken from an authoritative nomenclature reference, including Mycobank for fungi and yeasts, the Prokaryotic Nomenclature Up-to-date for bacteria and archaea, AlgaeBase for algae and cyanobacteria, and ICVT for viruses. For Archaea, Bacteria, Filamentous Fungi and Yeasts, genus name followed by species name and by the subspecies and variant names, when appropriate. The subspecies name must be preceded by “subsp.”. The variant name must be preceded by “var.”. When the species name is not available, do not include “sp.”. When the genus name is not available, specify the family name instead. For hybrid strains, more than one taxon name can be specified. The semicolon “;” must be used as a separation character."
+        },
+        "Infrasubspecific names": {
+          "$id": "#/properties/Taxonomy/properties/Infrasubspecific%20names",
+          "type": "string",
+          "title": "Infrasubspecific names",
+          "description": "Infrasubspecific names including biovar, chemovar, cultivar, morphovar, pathovar, phagovar, serovar, forma specialis, phase. The infrasubspecific name is usually preceded by a short specification of its type, e.g. “pv.” for pathovar and “sv.” for serovar.",
+          "default": ""
+        },
+        "Interspecific hybrid": {
+          "$id": "#/properties/Taxonomy/properties/Interspecific%20hybrid",
+          "type": "number",
+          "enum": [ 1, 2 ],
+          "title": "Interspecific hybrid",
+          "description": "This field reports whether the strain is an interspecific hybrid. Values: 1 (for No), 2 (for Yes).",
+          "default": ""
+        },
+        "Comment on taxonomy": {
+          "$id": "#/properties/Taxonomy/properties/Comment%20on%20taxonomy",
+          "type": "string",
+          "title": "Comment on taxonomy",
+          "description": "Any comment and/or note on the taxonomy of the strain. It may be used, e.g., for information on new species or revised nomenclatures. It must be used when the Taxon name data field includes a name that is not present in the nomenclature reference.",
+          "default": ""
+        },
+        "Status": {
+          "$id": "#/properties/Taxonomy/properties/Status",
+          "type": "string",
+          "title": "Status",
+          "description": "For type strains, specify their type (type, neotype, holotype, epitype, etc). A list of allowed values is not defined and this information can be provided as free text. Future improvements of the dataset will likely foresee a list of values.",
+          "default": ""
+        },
+        "Sexual state": {
+          "$id": "#/properties/Taxonomy/properties/Sexual%20state",
+          "type": "string",
+	  "enum": [ "Mata","Matalpha","Mata/Matalpha","Mata","Matb","Mata/Matb","MTLa","MTLalpha","MTLa/MTLalpha","MAT1-1","MAT1-2","MAT1","MAT2","MT+","MT-" ],
+          "title": "Sexual state",
+          "description": "Information on strain sexual state / mating type, for relevant resource types.",
+          "default": ""
+        },
+        "Ploidy": {
+          "$id": "#/properties/Taxonomy/properties/Ploidy",
+          "type": "number",
+	  "enum": [ 0, 1, 2, 3, 4, 9 ],
+          "title": "Ploidy",
+          "description": "Information on the ploidy level of the strain. Values: 0 (Aneuploid), 1 (for Haploid), 2 (for Diploid), 3 (for Triploid), 4 (for Tetraploid), 9 (for Polyploid (over 4n)).",
+          "default": ""
+        }
+      },
+      "additionalProperties": true
+    },
+    "Deposit": {
+      "$id": "#/properties/Deposit",
+      "type": "object",
+      "title": "The Deposit schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "properties": {
+        "History of deposit": {
+          "$id": "#/properties/Deposit/properties/History%20of%20deposit",
+          "type": "string",
+          "title": "History of deposit",
+          "description": "The field includes entries separated by '<' meaning 'received from'. Entries may include persons or CCs. The name of the CC should be followed by the month, when available, and year of the acquisition. Between parentheses, the strain designation or CC numbers and/or a name can also be entered when a name change has occurred.",
+          "default": ""
+        },
+        "Depositor": {
+          "$id": "#/properties/Deposit/properties/Depositor",
+          "type": "string",
+          "title": "Depositor",
+          "description": "Name, institute and town / country of the depositor.",
+          "default": ""
+        },
+        "Date of deposit": {
+          "$id": "#/properties/Deposit/properties/Date%20of%20deposit",
+          "type": "string",
+          "format": "date",
+          "title": "Date of deposit",
+          "description": "Date when the strain was deposited at the CC.",
+          "default": ""
+        }
+      },
+      "additionalProperties": true
+    },
+    "Sampling": {
+      "$id": "#/properties/Sampling",
+      "type": "object",
+      "title": "Sampling",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "properties": {
+        "Collected by": {
+          "$id": "#/properties/Sampling/properties/Collected%20by",
+          "type": "string",
+          "title": "Collected by",
+          "description": "Name, institute and town / country of the collector.",
+          "default": ""
+        },
+        "Date of collection": {
+          "$id": "#/properties/Sampling/properties/Date%20of%20collection",
+          "type": "string",
+          "format": "date",
+          "title": "Date of collection",
+          "description": "Date when the sample was collected.",
+          "default": ""
+        },
+        "Geographic origin": {
+          "$id": "#/properties/Sampling/properties/Geographic%20origin",
+          "type": "object",
+          "title": "The Geographic origin schema",
+          "description": "The geographic origin of the strain, including geographic coordinates, altitude and location.",
+          "required": [ "Geographic location" ],
+          "properties": {
+	    "Geographic location": {
+              "$id": "#/properties/Sampling/properties/Geographic%20origin/properties/Geographic%20location",
+              "type": "object",
+              "title": "Geographic location",
+              "description": "The locality where the sample was collected.",
+	      "default": {},
+	      "properties": {
+		      "oneOf": [
+			      {
+				      "Location": {
+					      "type": "string",
+					      "title": "Location",
+					      "description": "Location expressed in free text. Sould include locality, town, province, reginon, country."
+				      }
+			      },
+			      {
+				      "Locality": {
+					      "type": "string",
+					      "title": "Locality name",
+					      "description": "Name of the most specific locality of origin",
+					      "default": ""
+				      },
+				      "Town": {
+					      "type": "string",
+					      "title": "Town name",
+					      "description": "Name of the town of origin",
+					      "default": ""
+				      },
+				      "Province": {
+					      "type": "string",
+					      "title": "Province name",
+					      "description": "Name of the province of origin",
+					      "default": ""
+				      },
+				      "Region": {
+					      "type": "string",
+					      "title": "Region name",
+					      "description": "Name of the region of origin",
+					      "default": ""
+				      },
+				      "Country": {
+					      "type": "string",
+					      "title": "Country name",
+					      "description": "Name of the country of origin",
+					      "default": ""
+				      },
+				      "Continent": {
+					      "type": "string",
+					      "title": "Continent name",
+					      "description": "Name of the continent of origin",
+					      "default": ""
+				      }
+			      }
+		      ]
+	        }
+	    },
+            "Coordinates of geographic origin": {
+              "$id": "#/properties/Sampling/properties/Geographic%20origin/properties/Coordinates%20of%20geographic%20origin",
+              "type": "object",
+              "title": "Coordinates of geographic origin",
+              "description": "The geographic coordinates of the location where the sample was collected. Latitude and longitude are expressed in decimal degrees. Cardinal directions North and West are implicit and must not be reported. When included, precision must be expressed in kilometers.",
+	      "required": [ "Latitude", "Longitude" ],
+              "properties": {
+                "Latitude": {
+                  "$id": "#/properties/Sampling/properties/Geographic%20origin/properties/Coordinates%20of%20geographic%20origin/properties/Latitude",
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90,
+                  "title": "Latitude",
+                  "description": "Latitude of geograhic origin."
+                },
+                "Longitude": {
+                  "$id": "#/properties/Sampling/properties/Geographic%20origin/properties/Coordinates%20of%20geographic%20origin/properties/Longitude",
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180,
+                  "title": "Longitude",
+                  "description": "Longitude of geograhic origin."
+                },
+                "Precision": {
+                  "$id": "#/properties/Sampling/properties/Geographic%20origin/properties/Coordinates%20of%20geographic%20origin/properties/Precision",
+                  "type": "number",
+                  "title": "Precision",
+                  "description": "The precision of geographic coordinates, expressed in kilometers.",
+                  "default": ""
+                },
+                "Altitude": {
+                  "$id": "#/properties/Sampling/properties/Geographic%20origin/properties/Coordinates%20of%20geographic%20origin/properties/Altitude",
+                  "type": "number",
+                  "title": "Altitude",
+                  "description": "The altitude of the location where the sample was collected.",
+                  "default": ""
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        },
+        "Substrate/host of isolation": {
+          "$id": "#/properties/Sampling/properties/Substrate/host%20of%20isolation",
+          "type": "string",
+          "title": "Substrate/host of isolation",
+          "description": "Information about the substrate and the host of isolation of the strain. It may include the detailed substrate from which the strain was isolated and the name of host plant/animal.",
+          "default": ""
+        },
+        "Isolation habitat": {
+          "$id": "#/properties/Sampling/properties/Isolation%20habitat",
+          "type": "string",
+          "title": "Isolation habitat",
+          "description": "Information about the biotope where the species was found. It should include environmental physical factors, such as humidity, range of temperature, pH and light intensity, as well as biotic factors, such as the availability of food and the presence or absence of predators.",
+          "default": ""
+        },
+        "Ontobiotope term for the isolation habitat": {
+          "$id": "#/properties/Sampling/properties/Ontobiotope%20term%20for%20the%20isolation%20habitat",
+          "type": "array",
+          "title": "Ontobiotope terms for the isolation habitat",
+          "description": "Information about the habitat where the species was found provided by using the most specific term(s) of the Ontobiotope ontology of microorganism habitats.",
+          "default": [],
+          "properties": {
+            "Term": {
+              "$id": "#/properties/Sampling/properties/Ontobiotope%20term%20for%20the%20isolation%20habitat/properties/Term",
+              "type": "array",
+              "title": "Ontobiotope term",
+              "description": "An explanation about the purpose of this instance.",
+              "default": []
+            },
+            "Id": {
+              "$id": "#/properties/Sampling/properties/Ontobiotope%20term%20for%20the%20isolation%20habitat/properties/Id",
+              "type": "array",
+              "title": "The Id schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": []
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "Isolation": {
+      "$id": "#/properties/Isolation",
+      "type": "object",
+      "title": "The Isolation schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "properties": {
+        "Isolated by": {
+          "$id": "#/properties/Isolation/properties/Isolated%20by",
+          "type": "string",
+          "title": "Isolated by",
+          "description": "Name, institute and town / country of the isolator.",
+          "default": ""
+        },
+        "Date of isolation": {
+          "$id": "#/properties/Isolation/properties/Date%20of%20isolation",
+          "type": "string",
+          "format": "date",
+          "title": "Date of isolation",
+          "description": "Date when the strain was isolated from the sample.",
+          "default": ""
+        }
+      },
+      "additionalProperties": true
+    },
+    "Growing conditions": {
+      "$id": "#/properties/Growing%20conditions",
+      "type": "object",
+      "title": "The Growing conditions schema",
+      "description": "An explanation about the purpose of this instance.",
+      "required": [ "Recommended growth temperature", "Recommended medium for growth" ],
+      "properties": {
+        "Tested temperature growth range": {
+          "$id": "#/properties/Growing%20conditions/properties/Tested%20temperature%20growth%20range",
+          "type": "string",
+          "pattern": "^[0-9]+.[0-9]+;[0-9]+.[0-9]+",
+          "title": "Tested temperature growth range",
+          "description": "The lowest and the highest temperature at which the strain was tested for growing. Temperatures are expressed as decimal numbers in Celsius degrees and must be separated by a semicolon.",
+          "default": ""
+        },
+        "Recommended growth temperature": {
+          "$id": "#/properties/Growing%20conditions/properties/Recommended%20growth%20temperature",
+          "type": "number",
+          "title": "Recommended growth temperature",
+          "description": "The recommended growing temperature for the strain. The temperature is expressed in Celsius degrees."
+        },
+        "Recommended medium for growth": {
+          "$id": "#/properties/Growing%20conditions/properties/Recommended%20medium%20for%20growth",
+          "type": "string",
+          "title": "Recommended medium for growth",
+          "description": "The medium that is recommend for growing the strain, expressed as a textual reference, usually an acronym, to the appropriate growth medium in a table provided by the CC."
+        }
+      },
+      "additionalProperties": true
+    },
+    "Modifications": {
+      "$id": "#/properties/Modifications",
+      "type": "object",
+      "title": "The Modifications schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "properties": {
+        "GMO": {
+          "$id": "#/properties/Modifications/properties/GMO",
+          "type": "number",
+          "enum": [ 1, 2 ],
+          "title": "GMO",
+          "description": "Specify whether the strain is a Genetically Modified Organism (GMO). Values: 1 (for No), 2 (for Yes).",
+          "default": ""
+        },
+        "GMO construction information": {
+          "$id": "#/properties/Modifications/properties/GMO%20construction%20information",
+          "type": "string",
+          "title": "GMO construction information",
+          "description": "Information on the construction of the GMO.",
+          "default": ""
+        },
+        "Mutant information": {
+          "$id": "#/properties/Modifications/properties/Mutant%20information",
+          "type": "string",
+          "title": "Mutant information",
+          "description": "Information on mutant strains.",
+          "default": ""
+        },
+        "Genotype": {
+          "$id": "#/properties/Modifications/properties/Genotype",
+          "type": "string",
+          "title": "Genotype",
+          "description": "Information on the genotype of the strain.",
+          "default": ""
+        }
+      },
+      "additionalProperties": true
+    },
+    "Literature": {
+      "$id": "#/properties/Literature",
+      "type": "array",
+      "title": "Literature",
+      "description": "Information on literature linked to the identification and properties of the strain.",
+      "default": [],
+      "additionalItems": true,
+      "items": {
+        "$id": "#/properties/Literature/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/Literature/items/anyOf/0",
+            "type": "object",
+            "title": "The first Literature schema",
+            "description": "Bibliographic reference expressed by PMID.",
+            "required": [ "Identification", "PMID" ],
+            "properties": {
+              "Identification": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Identification",
+                "type": "number",
+                "enum": [ 1, 2 ],
+                "title": "Identification",
+                "description": "Specify whether the bibliographic reference is related to the identification publication or not. Values: 1 (for No), w (for Yes)."
+              },
+              "PMID": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/PMID",
+                "type": "number",
+                "minimum": 1,
+                "maximum": 99999999,
+                "multipleOf": 1,
+                "title": "PMID",
+                "description": "The PMID of the publication."
+              }
+            },
+            "additionalProperties": true
+          },
+          {
+            "$id": "#/properties/Literature/items/anyOf/0",
+            "type": "object",
+            "title": "The second Literature schema",
+            "description": "Bibliographic reference expressed by DOI.",
+            "required": [ "Identification", "DOI" ],
+            "properties": {
+              "Identification": {
+                "$ref": "#/properties/Literature/items/anyOf/0/properties/Identification"
+              },
+              "DOI": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/DOI",
+                "type": "string",
+                "title": "DOI",
+                "description": "The DOI of the publication."
+              }
+            },
+            "additionalProperties": true
+          },
+          {
+            "$id": "#/properties/Literature/items/anyOf/1",
+            "type": "object",
+            "title": "The third Literature schema",
+            "description": "Bibliographic reference expressed by bibliography items.",
+            "default": {},
+            "required": [ "Identification", "Authors", "Title", "Journal", "Year" ],
+            "properties": {
+              "Identification": {
+                "$ref": "#/properties/Literature/items/anyOf/0/properties/Identification"
+              },
+              "Authors": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Authors",
+                "type": "string",
+                "title": "Authors",
+                "description": "The list of the authors of the publication."
+              },
+              "Title": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Title",
+                "type": "string",
+                "title": "Title",
+                "description": "The title of the publication."
+              },
+              "Journal": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Journal",
+                "type": "string",
+                "title": "Journal",
+                "description": "The journal of the publication."
+              },
+              "Year": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Year",
+                "type": "number",
+                "minimum": 1500,
+                "maximum": 2030,
+                "title": "Year",
+                "description": "The year of the publication."
+              },
+              "Volume": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Volume",
+                "type": "string",
+                "title": "Volume",
+                "description": "The volume of the publication.",
+                "default": ""
+              },
+              "Issue": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Issue",
+                "type": "string",
+                "title": "Issue",
+                "description": "The issue of the publication.",
+                "default": ""
+              },
+              "Pages": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Pages",
+                "type": "string",
+                "title": "Pages",
+                "description": "The pages of the publication.",
+                "default": ""
+              },
+              "Editors": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Editors",
+                "type": "string",
+                "title": "Editors",
+                "description": "The list of the editors of the publication.",
+                "default": ""
+              },
+              "Publishers": {
+                "$id": "#/properties/Literature/items/anyOf/0/properties/Publishers",
+                "type": "string",
+                "title": "Publishers",
+                "description": "The publisher of the publication.",
+                "default": ""
+              }
+            },
+            "additionalProperties": true
+          }
+        ]
+      }
+    },
+    "Biotechnology": {
+      "$id": "#/properties/Biotechnology",
+      "type": "object",
+      "title": "The Biotechnology schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "properties": {
+        "Enzyme production": {
+          "$id": "#/properties/Biotechnology/properties/Enzyme%20production",
+          "type": "array",
+          "title": "Enzyme production",
+          "description": "Information about enzyme production by the strain.",
+          "default": [],
+          "items": {
+            "$id": "#/properties/Biotechnology/properties/Enzyme%20production/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/Biotechnology/properties/Enzyme%20production/items/anyOf/0",
+                "type": "string",
+                "title": "Enzyme name",
+                "description": "Name of an enzyme.",
+                "default": ""
+              }
+            ]
+          }
+        },
+        "Production of metabolites": {
+          "$id": "#/properties/Biotechnology/properties/Production%20of%20metabolites",
+          "type": "array",
+          "title": "Production of metabolites",
+          "description": "Information about metabolite production by the strain.",
+          "default": [],
+          "items": {
+            "$id": "#/properties/Biotechnology/properties/Production%20of%20metabolites/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/Biotechnology/properties/Production%20of%20metabolites/items/anyOf/0",
+                "type": "string",
+                "title": "Metabolite name",
+                "description": "Name of a metabolite, possibly associated with a function.",
+                "default": ""
+              }
+            ]
+          }
+        },
+        "Applications": {
+          "$id": "#/properties/Biotechnology/properties/Applications",
+          "type": "array",
+          "title": "Applications",
+          "description": "Information about applications of the strain.",
+          "default": [],
+          "items": {
+            "$id": "#/properties/Biotechnology/properties/Applications/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/Biotechnology/properties/Applications/items/anyOf/0",
+                "type": "string",
+                "title": "Application name",
+                "description": "Name of an application.",
+                "default": ""
+              }
+            ]
+          }
+        },
+        "Plasmids": {
+          "$id": "#/properties/Biotechnology/properties/Plasmids",
+          "type": "array",
+          "title": "Plasmids",
+          "description": "Information about plasmids in the strain.",
+          "default": [],
+          "additionalItems": true,
+          "items": {
+            "$id": "#/properties/Biotechnology/properties/Plasmids/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/Biotechnology/properties/Plasmids/items/anyOf/0",
+                "type": "string",
+                "title": "Information about one plasmid",
+		"description": "It may include plasmid name and type (original plasmid, cloning vehicle, recombinant plasmid), restriction sites, relevant genes (e.g., origin of replication, transposons, promoters, terminators, structural genes).",
+                "default": ""
+              }
+            ]
+          }
+        },
+        "Plasmids collections fields": {
+          "$id": "#/properties/Biotechnology/properties/Plasmids%20collections%20fields",
+          "type": "array",
+          "title": "Plasmids collections fields",
+          "description": "Information about availability of strain plasmids in CCs of plasmids.",
+          "default": [],
+          "items": {
+              "$id": "#/properties/Biotechnology/properties/Plasmids%20collections%20fields/items/anyOf/0",
+              "type": "object",
+              "title": "Plasmid in a collection",
+              "description": "Reference to a plasmid in a collection.",
+              "default": {},
+              "required": [ "Name", "Collection number" ],
+              "properties": {
+                  "Name": {
+                    "$id": "#/properties/Biotechnology/properties/Plasmids%20collections%20fields/items/anyOf/0/properties/Name",
+                    "type": "string",
+                    "title": "Plasmid name",
+                    "description": "The name of the plasmid in a collection."
+                  },
+                  "Collection number": {
+                    "$id": "#/properties/Biotechnology/properties/Plasmids%20collections%20fields/items/anyOf/0/properties/Collection%20number",
+                    "type": "string",
+                    "title": "Collection number",
+                    "description": "The number or code of the plasmid in the plasmid collection."
+                  }
+                }
+              }
+            }
+      },
+      "additionalProperties": true
+    },
+    "Genomic sequences and accession numbers": {
+      "$id": "#/properties/Genomic%20sequences%20and%20accession%20numbers",
+      "type": "array",
+      "title": "The Genomic sequences and accession numbers schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": [],
+      "items": {
+        "$id": "#/properties/Genomic%20sequences%20and%20accession%20numbers/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/Genomic%20sequences%20and%20accession%20numbers/items/anyOf/0",
+            "type": "object",
+            "title": "The first anyOf schema",
+            "description": "An explanation about the purpose of this instance.",
+            "required": [ "Marker name", "INSDC Accession number" ],
+            "properties": {
+              "Marker name": {
+                "$id": "#/properties/Genomic%20sequences%20and%20accession%20numbers/items/anyOf/0/properties/Marker%20name",
+                "type": "string",
+                "title": "The Marker name schema",
+                "description": "An explanation about the purpose of this instance."
+              },
+              "INSDC Accession number": {
+                "$id": "#/properties/Genomic%20sequences%20and%20accession%20numbers/items/anyOf/0/properties/INSDC%20Accession%20number",
+                "type": "string",
+                "pattern": "[ACGTacgt \n]+",
+                "title": "The INSDC Accession number schema",
+                "description": "An explanation about the purpose of this instance."
+              },
+              "Sequence": {
+                "$id": "#/properties/Genomic%20sequences%20and%20accession%20numbers/items/anyOf/0/properties/Sequence",
+                "type": "string",
+                "title": "The Sequence schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "Remarks": {
+      "$id": "#/properties/Remarks",
+      "type": "string",
+      "title": "Remarks",
+      "description": "Any further note that is not present in the other fields.",
+      "default": ""
+    }
+  },
+  "additionalProperties": true
+}
